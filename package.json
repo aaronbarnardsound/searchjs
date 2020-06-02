@@ -50,6 +50,7 @@
     "uglify-js": "^3.4.1"
   },
   "scripts": {
+    "prepare": "npm run build",
     "build": "NODE_ENV=prod rollup -c && npm run uglify",
     "prepublishOnly": "npm run-script build",
     "uglify": "uglifyjs ./lib/searchjs.js --compress --mangle --comments -o ./lib/searchjs.min.js",
