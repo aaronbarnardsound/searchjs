@@ -58,5 +58,7 @@
     "test-watch": "NODE_ENV=test mocha --watch --require  @babel/register ./test/test.js --reporter spec",
     "coverage": "nyc npm test"
   },
-  "dependencies": {}
+  "dependencies": {
+    "bignumber.js": "^9.0.0"
+  }
 }

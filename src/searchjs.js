@@ -1,3 +1,4 @@
+import Bignumber from 'bignumber.js'
 import {toType, deepField} from './util';
 import {_getOptions} from './option';
 
@@ -29,11 +30,12 @@ export function singleMatch(field,s,text,word,regexp,start,end) {
 			if (s.from !== undefined || s.to !== undefined || s.gte !== undefined || s.lte !== undefined) {
 				from = s.from || s.gte;
 				to = s.to || s.lte;
-				oneMatch = (s.from !== undefined || s.gte !== undefined ? field >= from : true) &&
-					(s.to !== undefined || s.lte !== undefined ? field <= to: true);
+				field = new Bignumber(field)
+				oneMatch = (s.from !== undefined || s.gte !== undefined ? field.gte(from) : true) &&
+					(s.to !== undefined || s.lte !== undefined ? field.lte(to): true);
 			} else if (s.gt !== undefined || s.lt !== undefined) {
-				oneMatch = (s.gt !== undefined ? field > s.gt : true) &&
-					(s.lt !== undefined ? field < s.lt: true);
+				oneMatch = (s.gt !== undefined ? field.gt(s.gt) : true) &&
+					(s.lt !== undefined ? field.lt(s.lt): true);
 			}
 		} else {
 			if(field instanceof Date && s instanceof Date) {
@@ -63,14 +65,15 @@ export function singleMatch(field,s,text,word,regexp,start,end) {
 			re = new RegExp(s+"$" , "i");
 			oneMatch = field && field.match(re) !== null;
 		} else if (s !== null && s !== undefined && toType(s) === "object") {
+				field = new Bignumber(field)
 				if (s.from !== undefined || s.to !== undefined || s.gte !== undefined || s.lte !== undefined) {
 					from = s.from || s.gte;
 					to = s.to || s.lte;
-					oneMatch = (s.from !== undefined || s.gte !== undefined ? field >= from : true) &&
-						(s.to !== undefined || s.lte !== undefined ? field <= to: true);
+					oneMatch = (s.from !== undefined || s.gte !== undefined ? field.gte(from) : true) &&
+						(s.to !== undefined || s.lte !== undefined ? field.lte(to): true);
 				} else if (s.gt !== undefined || s.lt !== undefined) {
-					oneMatch = (s.gt !== undefined ? field > s.gt : true) &&
-						(s.lt !== undefined ? field < s.lt: true);
+					oneMatch = (s.gt !== undefined ? field.gt(s.gt) : true) &&
+						(s.lt !== undefined ? field.lt(s.lt): true);
 				}
 		} else {
 			oneMatch = s === field;
