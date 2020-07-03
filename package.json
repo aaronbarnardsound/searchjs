@@ -27,7 +27,7 @@
     "node": ">=0.8"
   },
   "main": "./lib/searchjs.js",
-  "module": "./lib/searchjs.js",
+  "module": "./lib/searchjs.esm.js",
   "files": [
     "/lib"
   ],
