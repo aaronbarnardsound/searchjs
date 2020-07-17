@@ -27,10 +27,10 @@ export function singleMatch(field,s,text,word,regexp,start,end) {
 		oneMatch = s === field;
 	} else if (t === "number" || field instanceof Date) {
 		if(s !== null && s !== undefined && toType(s) === "object") {
+			field = new Bignumber(field)
 			if (s.from !== undefined || s.to !== undefined || s.gte !== undefined || s.lte !== undefined) {
 				from = s.from || s.gte;
 				to = s.to || s.lte;
-				field = new Bignumber(field)
 				oneMatch = (s.from !== undefined || s.gte !== undefined ? field.gte(from) : true) &&
 					(s.to !== undefined || s.lte !== undefined ? field.lte(to): true);
 			} else if (s.gt !== undefined || s.lt !== undefined) {
